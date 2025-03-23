@@ -37,7 +37,7 @@ pip install -r requirements.txt
 
 Run the Streamlit application:
 
-streamlit run app.py
+streamlit run health_analysis_final.py
 
 Dependencies
 
