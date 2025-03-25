@@ -19,7 +19,7 @@ This dashboard simplifies patient health metric exploration.
 """)
 
 # ---- Loading Dataset ----
-DATA_PATH = "C:/Users/ADMIN/Downloads/healthcare_dataset.csv"  # Update with actual file path
+DATA_PATH = "https://raw.githubusercontent.com/jimmie585/health_streamlit_app/refs/heads/main/healthcare_dataset.csv"  # Update with actual file path
 
 try:
     df = pd.read_csv(DATA_PATH)
