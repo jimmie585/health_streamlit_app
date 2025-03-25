@@ -19,7 +19,7 @@ This dashboard simplifies patient health metric exploration.
 """)
 
 # ---- Loading Dataset from GitHub ----
-DATA_URL = "https://raw.githubusercontent.com/your-username/your-repo/main/healthcare_dataset.csv"  # REPLACE with actual GitHub raw link
+DATA_URL = "https://raw.githubusercontent.com/jimmie585/health_streamlit_app/refs/heads/main/healthcare_dataset.csv"  # REPLACE with actual GitHub raw link
 
 try:
     df = pd.read_csv(DATA_URL)
