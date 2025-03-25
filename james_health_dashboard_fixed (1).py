@@ -28,7 +28,7 @@ DATA_PATH = "https://raw.githubusercontent.com/jimmie585/health_streamlit_app/ma
 
 try:
     df = pd.read_csv(DATA_PATH)
-    #st.success("✅ Dataset loaded successfully!")
+   # st.success("✅ Dataset loaded successfully!")
 except FileNotFoundError:
     st.error(f"❌ Dataset not found at: {DATA_PATH}")
     st.stop()  # Stop execution if dataset is missing
@@ -38,11 +38,13 @@ st.sidebar.header("🔍 Filter Patient Data")
 st.sidebar.write("Use the filters below to **narrow down patient records** based on Age and BMI.")
 
 # Age Filter
-min_age, max_age = int(df["Age"].min()), int(df["Age"].max())
+min_age = int(df["Age"].min())  # Minimum age from dataset
+max_age = int(df["Age"].max())  # Maximum age from dataset
 age_filter = st.sidebar.slider("📅 Select Age Range", min_age, max_age, (min_age, max_age))
 
-# BMI Filter
-min_bmi, max_bmi = float(df["BMI"].min()), float(df["BMI"].max())
+# BMI Filter (Extended to 100)
+min_bmi = float(df["BMI"].min())  # Get minimum BMI from dataset
+max_bmi = 100  # Set maximum BMI limit to 100
 bmi_filter = st.sidebar.slider("⚖️ Select BMI Range", min_bmi, max_bmi, (min_bmi, max_bmi))
 
 # Apply Filters
