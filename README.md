@@ -7,7 +7,7 @@ This project is a Streamlit-based dashboard designed to analyze and assess the r
 
 Features
 
-User-Friendly Interface: Built with Streamlit for easy interaction.
+User-Friendly Interface: Built with Streamlit for easy interaction.use this link to view the app https://healthappapp-5f9rlj5qgverakvlz4szij.streamlit.app/
 
 Data Visualization: Interactive charts and graphs for exploratory data analysis (EDA).
 
