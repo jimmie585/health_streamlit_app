@@ -23,7 +23,7 @@ DATA_PATH = "https://raw.githubusercontent.com/jimmie585/health_streamlit_app/re
 
 try:
     df = pd.read_csv(DATA_PATH)
-    st.success("✅ Dataset loaded successfully!")
+    #st.success("✅ Dataset loaded successfully!")
 except FileNotFoundError:
     st.error(f"❌ Dataset not found at: {DATA_PATH}")
     st.stop()  # Stop execution if dataset is missing
