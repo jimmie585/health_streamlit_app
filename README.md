@@ -1,11 +1,11 @@
 # health_streamlit_app
 Streamlit Heart Disease Risk Analysis
 
-Overview
+## Overview
 
 This project is a Streamlit-based dashboard designed to analyze and assess the risk of heart disease using data visualization and machine learning models. The tool helps users understand various risk factors and provides predictive insights based on user inputs.
 
-Features
+## Features
 
 User-Friendly Interface: Built with Streamlit for easy interaction.use this link to view the app https://healthappapp-5f9rlj5qgverakvlz4szij.streamlit.app/
 
@@ -17,11 +17,11 @@ Dynamic Inputs: Allows users to input health parameters like age, cholesterol le
 
 Real-Time Predictions: Provides instant risk assessment based on input data.
 
-Installation
+## Installation
 
 To run the application, follow these steps:
 
-Clone the repository:
+## Clone the repository:
 
 git clone https://github.com/jimmie585/streamlit-health-project.git
 cd streamlit-health-project
@@ -31,7 +31,7 @@ Create a virtual environment (optional but recommended):
 python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 
-Install the required dependencies:
+## Install the required dependencies:
 
 pip install -r requirements.txt
 
@@ -51,7 +51,7 @@ Scikit-learn
 
 Matplotlib & Seaborn
 
-Usage
+## Usage
 
 Open the application in your browser after running streamlit run app.py.
 
@@ -59,7 +59,7 @@ Enter relevant health parameters in the input fields.
 
 View real-time risk predictions and visualizations.
 
-Dataset
+## Dataset
 
 The model is trained on a publicly available heart disease dataset containing features such as:
 
@@ -75,7 +75,7 @@ Heart Rate
 
 Other medical factors
 
-Future Improvements
+## Future Improvements
 
 Integration of more advanced ML models.
 
