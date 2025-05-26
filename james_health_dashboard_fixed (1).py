@@ -48,8 +48,14 @@ By combining prediction, clustering, and visualization in one tool, healthcare d
 st.sidebar.header("📊 Make a Prediction")
 st.sidebar.markdown("Enter a patient's **Age** and **BMI** to predict their diabetes status and determine which health cluster they belong to.")
 
-age_input = st.sidebar.number_input("Enter Age", min_value=20, max_value=150, value=30)
-bmi_input = st.sidebar.number_input("Enter BMI", min_value=10.0, max_value=150.0, value=25.0)
+# Sidebar inputs for prediction
+st.sidebar.header("Diabetes Prediction Input")
+age_input = st.sidebar.number_input("Enter Age", min_value=0, max_value=120, value=30)
+bmi_input = st.sidebar.number_input("Enter BMI", min_value=10.0, max_value=150.0, value=22.5)
+
+input_data = np.array([[age_input, bmi_input]])
+
+
 
 if st.sidebar.button("🔍 Predict"):
     input_data = np.array([[age_input, bmi_input]])
