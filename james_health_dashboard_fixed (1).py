@@ -76,8 +76,16 @@ st.sidebar.markdown("This section shows summary stats based on your filter selec
 # ---- Main: Filter Data Table ----
 st.header("📄 Filter Patient Data")
 st.markdown("Use the sliders below to filter patients based on **Age** and **BMI**. The table and charts will update accordingly.")
+# Convert Age column to numeric and drop missing values
+df["Age"] = pd.to_numeric(df["Age"], errors='coerce')
+df = df.dropna(subset=["Age"])
 
-age_filter = st.slider("Select Age Range", int(df["Age"].min()), int(df["Age"].max()), (20, 80))
+# Define min and max age for slider
+min_age = int(df["Age"].min())
+max_age = int(df["Age"].max())
+
+# Create slider with safe values
+age_filter = st.slider("Select Age Range", min_age, max_age, (20, 80))
 bmi_filter = st.slider("Select BMI Range", float(df["BMI"].min()), float(df["BMI"].max()), (20.0, 50.0))
 
 filtered_df = df[(df["Age"] >= age_filter[0]) & (df["Age"] <= age_filter[1]) &
