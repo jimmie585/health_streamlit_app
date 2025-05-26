@@ -212,6 +212,12 @@ cluster_stats = df.groupby("Cluster").agg({
 cluster_stats.columns = ["Cluster", "Age Mean", "Age Min", "Age Max", "BMI Mean", "BMI Min", "BMI Max", "Most Common Diabetes Label"]
 
 st.dataframe(cluster_stats)
+st.markdown("""
+- **Cluster 0** appears to represent younger individuals with lower BMI.
+- **Cluster 1** includes older individuals with higher BMI, possibly at higher diabetes risk.
+""")
+
+
 
 
 
