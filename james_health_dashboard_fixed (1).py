@@ -192,6 +192,12 @@ knn.fit(X_train_res, y_train_res)
 y_pred = knn.predict(X_test_scaled)
 print(classification_report(y_test, y_pred))
 
+
+# After making predictions with your KNN model:
+y_pred = knn.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+
+
 st.write(f"### ✅ Model Accuracy: {accuracy:.2f}")
 st.write("This accuracy score tells us **how well the model predicts diabetes cases**.")
 
