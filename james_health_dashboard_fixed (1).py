@@ -205,19 +205,26 @@ st.subheader("📊 Cluster Characteristics")
 st.markdown("""
 ### 🔎 Interpretation
 
-- **Cluster 0**: Typically includes [
+ # Cluster 0**: Typically includes 
 * Patience have both Normal and Prehypertension
 * All patients have Diabetes
 * Most of the patients are smokers 
-].
 
-- **Cluster 1**: Represents [
+
+# Cluster 1**: Represents 
 * Most patients have Hypertension and small percentage have Normal
 * Almost all patients have No Diabetes
-* All patients smoke].
+* All patients smoke.
 
-- **Cluster 2**: [].
-- **Cluster 3**: [Insert traits].
+# Cluster 2**: 
+* The patients have Normal bloodpressure
+* The patients do not smoke
+* Almost all patients have No Diabetes.
+
+#Cluster 3**: 
+* All patients have Prehypertension
+* All patients have No Diabetes
+* Almost all patients Do not smoke.
 
 These clusters help us understand different population segments in relation to diabetes risk based on Age and BMI.
 """)
