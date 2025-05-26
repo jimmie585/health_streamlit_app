@@ -37,18 +37,14 @@ except FileNotFoundError:
 st.sidebar.header("🔍 Filter Patient Data")
 st.sidebar.write("Use the filters below to **narrow down patient records** based on Age and BMI.")
 
-# Age Filter (Extended to 100)
-min_age = int(df["Age"].min())  # Minimum age from dataset
-max_age = 100  # Set maximum age limit to 100
-age_filter = st.sidebar.slider("📅 Select Age Range", min_age, max_age, (min_age, max_age))
+# Age Filter (single input)
+age_input = st.sidebar.number_input("Enter Age", min_value=0, max_value=120, value=30)
 
-# BMI Filter
-min_bmi, max_bmi = float(df["BMI"].min()), float(df["BMI"].max())
-bmi_filter = st.sidebar.slider("⚖️ Select BMI Range", min_bmi, max_bmi, (min_bmi, max_bmi))
+# BMI Filter (single input)
+bmi_input = st.sidebar.number_input("Enter BMI", min_value=20.0, max_value=150.0, value=25.0)
 
 # Apply Filters
-filtered_df = df[(df["Age"] >= age_filter[0]) & (df["Age"] <= age_filter[1]) & 
-                 (df["BMI"] >= bmi_filter[0]) & (df["BMI"] <= bmi_filter[1])]
+filtered_df = df[(df["Age"] == age_input) & (df["BMI"] == bmi_input)]
 
 # ---- 📋 Displaying Filtered Data ----
 st.markdown("## 📋 Filtered Patient Data")
