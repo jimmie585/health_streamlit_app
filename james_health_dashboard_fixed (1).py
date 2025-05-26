@@ -105,8 +105,23 @@ max_age = int(df["Age"].max())
 # Create slider with safe values
 age_filter = st.slider("Select Age Range", min_age, max_age, (20, 80))
 bmi_filter = st.slider("Select BMI Range", float(df["BMI"].min()), float(df["BMI"].max()), (20.0, 150.0))
+# Add Cholesterol range filter to the sidebar
+cholesterol_min = int(df["Cholesterol"].min())
+cholesterol_max = int(df["Cholesterol"].max())
+
+cholesterol_range = st.sidebar.slider(
+    "Select Cholesterol Level Range",
+    min_value=cholesterol_min,
+    max_value=cholesterol_max,
+    value=(cholesterol_min, cholesterol_max)
+)
 
 
+
+filtered_df = df[
+    (df["Cholesterol"] >= cholesterol_range[0]) &
+    (df["Cholesterol"] <= cholesterol_range[1])
+]
 
 filtered_df = df[(df["Age"] >= age_filter[0]) & (df["Age"] <= age_filter[1]) &
                  (df["BMI"] >= bmi_filter[0]) & (df["BMI"] <= bmi_filter[1])]
@@ -162,6 +177,15 @@ st.bar_chart(filtered_df["Diabetes"].value_counts())
 
 st.subheader("📌 Medication Adherence Levels")
 st.bar_chart(filtered_df["Medication_Adherence"].value_counts())
+st.subheader("Cholesterol Level Distribution")
+fig1 = px.histogram(filtered_df, x="Cholesterol", nbins=20, title="Cholesterol Level Histogram")
+st.plotly_chart(fig1)
+st.subheader("Average Cholesterol by Diabetes Status")
+avg_cholesterol = filtered_df.groupby("Diabetes")["Cholesterol"].mean().reset_index()
+
+fig2 = px.bar(avg_cholesterol, x="Diabetes", y="Cholesterol", title="Average Cholesterol by Diabetes")
+st.plotly_chart(fig2)
+
 
 # ---- 🧠 Machine Learning (KNN) for Diabetes Prediction ----
 st.markdown("## 🧠 Machine Learning Model (KNN) for Diabetes Prediction")
