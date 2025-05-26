@@ -71,19 +71,13 @@ st.sidebar.markdown("Enter a patient's **Age** and **BMI** to predict their diab
 st.sidebar.header("Diabetes Prediction Input")
 age_input = st.sidebar.number_input("Enter Age", min_value=0, max_value=120, value=30)
 bmi_input = st.sidebar.number_input("Enter BMI", min_value=10.0, max_value=150.0, value=22.5)
-cholesterol_input = st.sidebar.number_input(
-    "Enter Cholesterol Level (mg/dL)", 
-    min_value=50, 
-    max_value=400, 
-    value=200
-)
 
-input_data = np.array([[age_input, bmi_input,cholesterol_input]])
+input_data = np.array([[age_input, bmi_input]])
 
 
 
 if st.sidebar.button("🔍 Predict"):
-    input_data = np.array([[age_input, bmi_input,cholesterol_input]])
+    input_data = np.array([[age_input, bmi_input]])
     diabetes_pred = knn.predict(input_data)[0]
     cluster_pred = kmeans.predict(input_data)[0]
 
