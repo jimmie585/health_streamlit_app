@@ -106,8 +106,8 @@ max_age = int(df["Age"].max())
 age_filter = st.slider("Select Age Range", min_age, max_age, (20, 80))
 bmi_filter = st.slider("Select BMI Range", float(df["BMI"].min()), float(df["BMI"].max()), (20.0, 150.0))
 # Add Cholesterol range filter to the sidebar
-cholesterol_min = int(df["Cholesterol level"].min())
-cholesterol_max = int(df["Cholesterol level"].max())
+cholesterol_min = int(df["Cholesterol_level"].min())
+cholesterol_max = int(df["Cholesterol_level"].max())
 
 cholesterol_range = st.sidebar.slider(
     "Select Cholesterol Level Range",
@@ -119,8 +119,8 @@ cholesterol_range = st.sidebar.slider(
 
 
 filtered_df = df[
-    (df["Cholesterol level"] >= cholesterol_range[0]) &
-    (df["Cholesterol level"] <= cholesterol_range[1])
+    (df["Cholesterol_level"] >= cholesterol_range[0]) &
+    (df["Cholesterol_level"] <= cholesterol_range[1])
 ]
 
 filtered_df = df[(df["Age"] >= age_filter[0]) & (df["Age"] <= age_filter[1]) &
