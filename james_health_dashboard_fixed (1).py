@@ -196,6 +196,23 @@ print(classification_report(y_test, y_pred))
 # After making predictions with your KNN model:
 y_pred = knn.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
+# Assign cluster labels
+df["Cluster"] = kmeans.predict(df[["Age", "BMI"]])
+
+# Display cluster-wise characteristics
+st.subheader("🔍 Cluster Characteristics")
+
+cluster_stats = df.groupby("Cluster").agg({
+    "Age": ["mean", "min", "max"],
+    "BMI": ["mean", "min", "max"],
+    "Diabetes": lambda x: x.value_counts().index[0]  # Most common class
+}).reset_index()
+
+# Rename multi-index columns for clarity
+cluster_stats.columns = ["Cluster", "Age Mean", "Age Min", "Age Max", "BMI Mean", "BMI Min", "BMI Max", "Most Common Diabetes Label"]
+
+st.dataframe(cluster_stats)
+
 
 
 st.write(f"### ✅ Model Accuracy: {accuracy:.2f}")
