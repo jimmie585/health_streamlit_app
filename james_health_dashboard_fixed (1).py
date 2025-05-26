@@ -46,6 +46,7 @@ bmi_input = st.sidebar.number_input("Enter BMI", min_value=20.0, max_value=150.0
 # Apply Filters
 filtered_df = df[(df["Age"] == age_input) & (df["BMI"] == bmi_input)]
 
+
 # ---- 📋 Displaying Filtered Data ----
 st.markdown("## 📋 Filtered Patient Data")
 st.write("Here are the **filtered patient records** based on the selected Age and BMI range.")
