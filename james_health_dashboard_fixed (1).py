@@ -7,11 +7,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+import pickle
 df = pd.read_csv("healthcare_dataset.csv")  # file in the same folder as your app
+
 
 
 # cinverting to numeric
 df["Age"] = pd.to_numeric(df["Age"], errors='coerce')
+
+# Load the trained KNN model (once)
+with open("knn_model.pkl", "rb") as f:
+    knn = pickle.load(f)
 
 
 
