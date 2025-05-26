@@ -7,6 +7,18 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+@st.cache_data
+def load_data():
+    df = pd.read_csv("C:\\Users\\ADMIN\\Downloads\\healthcare_dataset.csv")
+    return df
+
+df = load_data()
+
+# cinverting to numeric
+df["Age"] = pd.to_numeric(df["Age"], errors='coerce')
+
+
+
 
 # ---- App Title and Description ----
 st.title("🩺 Patient Health Analytics Dashboard")
