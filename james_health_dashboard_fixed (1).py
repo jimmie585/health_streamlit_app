@@ -7,84 +7,125 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
-# ---- 🎯 Project Overview ----
-st.title("📊 Patient Health Data Dashboard")
+# ---- App Title and Description ----
+st.title("🩺 Patient Health Analytics Dashboard")
 st.markdown("""
-### 🏥 Project Overview  
-This interactive dashboard **analyzes patient health data** and applies **Machine Learning (KNN)** to **predict diabetes risks**.  
-It helps healthcare professionals **identify trends, detect potential health risks, and make data-driven decisions**.
+Welcome to the **Patient Health Dashboard**.  
+This tool helps you **explore healthcare data**, **predict diabetes risk**, and **understand clustering patterns** using Machine Learning models (KNN & K-Means).  
+Use the sidebar to input Age and BMI to get personalized predictions, or scroll down to view the full data and visuals.
 
-### 🔬 Problem Statement  
-Healthcare professionals often struggle with **analyzing large datasets** to detect **trends and health risks** efficiently.  
-This dashboard provides a **simple, visual, and data-driven solution** to explore patient metrics and predict health outcomes.
+---
+""")
+# ---- Problem Statement and Solution ----
+st.markdown("## 🩺 Problem Statement")
+st.markdown("""
+In modern healthcare, early detection and monitoring of chronic conditions like **diabetes** is critical.  
+However, healthcare professionals often lack quick tools to analyze large amounts of patient data, visualize patterns, and predict health risks effectively.
+
+This app addresses the following problems:
+- ❌ Difficulty identifying patients at risk of diabetes using basic indicators like Age and BMI.
+- ❌ Lack of quick, visual insights into health metrics like blood pressure, medication adherence, and diabetes distribution.
+- ❌ Manual analysis of health records is time-consuming and error-prone.
+
+---
 """)
 
-# ---- 📂 Loading Dataset ----
-st.markdown("## 📂 Loading Patient Data")
-st.write("This dataset contains **patient health records**, including age, BMI, blood pressure, diabetes status, and medication adherence.")
+st.markdown("## ✅ Solution")
+st.markdown("""
+This dashboard offers a **data-driven solution** using **machine learning** to:
+- ✅ **Predict Diabetes Status**: Users can enter Age and BMI to check diabetes risk using a trained **K-Nearest Neighbors (KNN)** model.
+- ✅ **Cluster Patients**: The app uses **K-Means Clustering** to group similar patient profiles for better population health insights.
+- ✅ **Interactive Data Filtering**: Users can filter patients by Age and BMI and view health trends instantly.
+- ✅ **Visual Analytics**: Clear bar charts show blood pressure levels, medication adherence, and diabetes distribution.
 
-# URL to dataset stored on GitHub
-DATA_PATH = "https://raw.githubusercontent.com/jimmie585/health_streamlit_app/main/healthcare_dataset.csv"  
+By combining prediction, clustering, and visualization in one tool, healthcare data analysis becomes easier, faster, and more accessible — even without coding knowledge.
 
-try:
-    df = pd.read_csv(DATA_PATH)
-    st.success("✅ Dataset loaded successfully!")
-except FileNotFoundError:
-    st.error(f"❌ Dataset not found at: {DATA_PATH}")
-    st.stop()  # Stop execution if dataset is missing
-
-# ---- 🔍 Sidebar Filters ----
-st.sidebar.header("🔍 Filter Patient Data")
-st.sidebar.write("Use the filters below to **narrow down patient records** based on Age and BMI.")
-
-# Age Filter: Use range slider with min and max from data
-min_age, max_age = int(df["Age"].min()), int(df["Age"].max())
-age_filter = st.sidebar.slider("Select Age Range", min_age, max_age, (min_age, max_age))
-
-# BMI Filter: Set fixed range from 20 to 150 with full default selected
-bmi_filter = st.sidebar.slider("Select BMI Range", 20.0, 150.0, (20.0, 150.0))
-
-# Apply Filters using range (inclusive)
-filtered_df = df[
-    (df["Age"] >= age_filter[0]) & (df["Age"] <= age_filter[1]) & 
-    (df["BMI"] >= bmi_filter[0]) & (df["BMI"] <= bmi_filter[1])
-]
-
-# ---- Handle empty filter result ----
-if filtered_df.empty:
-    st.warning("No records found for the selected Age and BMI range. Please adjust your filters.")
-else:
-    # ---- Display Data ----
-    st.header("Filtered Patient Data")
-    st.write(filtered_df)
+---
+""")
 
 
-# ---- 📋 Displaying Filtered Data ----
-st.markdown("## 📋 Filtered Patient Data")
-st.write("Here are the **filtered patient records** based on the selected Age and BMI range.")
-st.write(filtered_df)
+# ---- Sidebar: Prediction Input ----
+st.sidebar.header("📊 Make a Prediction")
+st.sidebar.markdown("Enter a patient's **Age** and **BMI** to predict their diabetes status and determine which health cluster they belong to.")
 
-# ---- 📊 Statistical Insights ----
-st.sidebar.header("📊 Statistical Insights")
-st.sidebar.write("Below are key **statistical distributions** of patient health conditions.")
+age_input = st.sidebar.number_input("Enter Age", min_value=20, max_value=150, value=30)
+bmi_input = st.sidebar.number_input("Enter BMI", min_value=10.0, max_value=150.0, value=25.0)
 
-st.sidebar.subheader("👤 Gender Distribution")
+if st.sidebar.button("🔍 Predict"):
+    input_data = np.array([[age_input, bmi_input]])
+    diabetes_pred = knn.predict(input_data)[0]
+    cluster_pred = kmeans.predict(input_data)[0]
+
+    st.subheader("🔎 Prediction Result")
+    st.markdown(f"- **Diabetes Status**: `{diabetes_pred}`")
+    st.markdown(f"- **Assigned Cluster**: `Cluster {cluster_pred}`")
+    st.info("These results are based on machine learning models trained using real patient data.")
+
+# ---- Sidebar Stats ----
+st.sidebar.markdown("---")
+st.sidebar.header("📈 Filtered Stats Summary")
+st.sidebar.markdown("This section shows summary stats based on your filter selections in the main section.")
+
+# ---- Main: Filter Data Table ----
+st.header("📄 Filter Patient Data")
+st.markdown("Use the sliders below to filter patients based on **Age** and **BMI**. The table and charts will update accordingly.")
+
+age_filter = st.slider("Select Age Range", int(df["Age"].min()), int(df["Age"].max()), (20, 80))
+bmi_filter = st.slider("Select BMI Range", float(df["BMI"].min()), float(df["BMI"].max()), (20.0, 50.0))
+
+filtered_df = df[(df["Age"] >= age_filter[0]) & (df["Age"] <= age_filter[1]) &
+                 (df["BMI"] >= bmi_filter[0]) & (df["BMI"] <= bmi_filter[1])]
+
+st.dataframe(filtered_df, use_container_width=True)
+
+# ---- Sidebar Stats Continued ----
+st.sidebar.write("**Gender Distribution**")
 st.sidebar.write(filtered_df["Gender"].value_counts())
 
-st.sidebar.subheader("❤️ Blood Pressure Levels")
+st.sidebar.write("**Blood Pressure Levels**")
 st.sidebar.write(filtered_df["Blood_Pressure"].value_counts())
 
-st.sidebar.subheader("🩸 Diabetes Cases")
+st.sidebar.write("**Diabetes Cases**")
 st.sidebar.write(filtered_df["Diabetes"].value_counts())
 
-# ---- 📈 Data Visualizations ----
-st.markdown("## 📈 Data Visualizations")
-st.write("Visualizing **important health metrics** from patient records.")
+st.sidebar.write("**Medication Adherence**")
+st.sidebar.write(filtered_df["Medication_Adherence"].value_counts())
+# ---- Statistical Insights ----
+st.markdown("## 📊 Statistical Insights")
+st.markdown("This section summarizes key statistics from the currently filtered patient dataset to help identify health trends quickly.")
 
-st.subheader("🩸 Blood Pressure Distribution")
+col1, col2 = st.columns(2)
+
+with col1:
+    st.metric("🧓 Average Age", f"{filtered_df['Age'].mean():.1f} years")
+    st.metric("📉 Minimum BMI", f"{filtered_df['BMI'].min():.1f}")
+    st.metric("📈 Maximum BMI", f"{filtered_df['BMI'].max():.1f}")
+
+with col2:
+    diabetes_rate = filtered_df['Diabetes'].value_counts(normalize=True).get("Yes", 0) * 100
+    st.metric("🩺 Diabetes Rate", f"{diabetes_rate:.1f}%")
+    adherence_rate = filtered_df['Medication_Adherence'].value_counts(normalize=True).get("Adherent", 0) * 100
+    st.metric("💊 Medication Adherence", f"{adherence_rate:.1f}%")
+
+# Additional frequency tables
+st.markdown("### 🧠 Gender Distribution")
+st.write(filtered_df["Gender"].value_counts())
+
+st.markdown("### 💉 Blood Pressure Levels")
+st.write(filtered_df["Blood_Pressure"].value_counts())
+
+
+# ---- Visualizations ----
+st.header("📊 Visualizations")
+st.markdown("Below are visualizations to help you understand how different health indicators are distributed across the filtered data.")
+
+st.subheader("📌 Blood Pressure Distribution")
 st.bar_chart(filtered_df["Blood_Pressure"].value_counts())
 
-st.subheader("💊 Medication Adherence Levels")
+st.subheader("📌 Diabetes Status Distribution")
+st.bar_chart(filtered_df["Diabetes"].value_counts())
+
+st.subheader("📌 Medication Adherence Levels")
 st.bar_chart(filtered_df["Medication_Adherence"].value_counts())
 
 # ---- 🧠 Machine Learning (KNN) for Diabetes Prediction ----
@@ -94,26 +135,29 @@ The **K-Nearest Neighbors (KNN) algorithm** is used here to **predict whether a 
 This is a simple machine learning model that **classifies patients into "Yes" (Diabetes) or "No" (No Diabetes)** categories.
 """)
 
-# Selecting Features for Prediction
-features = ["Age", "BMI"]
-X = df[features]
-y = df["Diabetes"]  # Target Variable
+# Features and target
+X = df[['Age', 'BMI']]
+y = df['Diabetes']
 
-# Splitting Data into Training and Testing Sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
 
-# Standardizing Data for Better Performance
+# Scale features
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# Training KNN Model
-knn = KNeighborsClassifier(n_neighbors=5)
-knn.fit(X_train_scaled, y_train)
+# Handle class imbalance
+smote = SMOTE(random_state=42)
+X_train_res, y_train_res = smote.fit_resample(X_train_scaled, y_train)
 
-# Model Evaluation
+# Train KNN
+knn = KNeighborsClassifier(n_neighbors=6)
+knn.fit(X_train_res, y_train_res)
+
+# Evaluate
 y_pred = knn.predict(X_test_scaled)
-accuracy = accuracy_score(y_test, y_pred)
+print(classification_report(y_test, y_pred))
 
 st.write(f"### ✅ Model Accuracy: {accuracy:.2f}")
 st.write("This accuracy score tells us **how well the model predicts diabetes cases**.")
