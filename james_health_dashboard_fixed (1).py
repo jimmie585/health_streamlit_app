@@ -173,7 +173,7 @@ This is a simple machine learning model that **classifies patients into "Yes" (D
 """)
 
 # Features and target
-X = df[['Age', 'BMI','cholestrol_level']]
+X = df[['Age', 'BMI']]
 y = df['Diabetes']
 
 # Train/test split
