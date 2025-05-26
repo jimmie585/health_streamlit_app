@@ -15,9 +15,12 @@ df = pd.read_csv("healthcare_dataset.csv")  # file in the same folder as your ap
 # cinverting to numeric
 df["Age"] = pd.to_numeric(df["Age"], errors='coerce')
 
-# Load the trained KNN model (once)
+# Load trained models
 with open("knn_model.pkl", "rb") as f:
     knn = pickle.load(f)
+
+with open("kmeans_model.pkl", "rb") as f:
+    kmeans = pickle.load(f)
 
 
 
@@ -100,7 +103,7 @@ max_age = int(df["Age"].max())
 
 # Create slider with safe values
 age_filter = st.slider("Select Age Range", min_age, max_age, (20, 80))
-bmi_filter = st.slider("Select BMI Range", float(df["BMI"].min()), float(df["BMI"].max()), (20.0, 50.0))
+bmi_filter = st.slider("Select BMI Range", float(df["BMI"].min()), float(df["BMI"].max()), (20.0, 150.0))
 
 filtered_df = df[(df["Age"] >= age_filter[0]) & (df["Age"] <= age_filter[1]) &
                  (df["BMI"] >= bmi_filter[0]) & (df["BMI"] <= bmi_filter[1])]
