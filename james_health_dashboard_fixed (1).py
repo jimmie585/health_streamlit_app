@@ -200,7 +200,6 @@ accuracy = accuracy_score(y_test, y_pred)
 df["Cluster"] = kmeans.predict(df[["Age", "BMI"]])
 
 st.subheader("📊 Cluster Characteristics")
-st.dataframe(cluster_stats)
 
 # Optional interpretation
 st.markdown("""
