@@ -71,13 +71,19 @@ st.sidebar.markdown("Enter a patient's **Age** and **BMI** to predict their diab
 st.sidebar.header("Diabetes Prediction Input")
 age_input = st.sidebar.number_input("Enter Age", min_value=0, max_value=120, value=30)
 bmi_input = st.sidebar.number_input("Enter BMI", min_value=10.0, max_value=150.0, value=22.5)
+cholesterol_input = st.sidebar.number_input(
+    "Enter Cholesterol Level (mg/dL)", 
+    min_value=50, 
+    max_value=400, 
+    value=200
+)
 
-input_data = np.array([[age_input, bmi_input]])
+input_data = np.array([[age_input, bmi_input,cholesterol_input]])
 
 
 
 if st.sidebar.button("🔍 Predict"):
-    input_data = np.array([[age_input, bmi_input]])
+    input_data = np.array([[age_input, bmi_input,cholesterol_input]])
     diabetes_pred = knn.predict(input_data)[0]
     cluster_pred = kmeans.predict(input_data)[0]
 
@@ -105,6 +111,8 @@ max_age = int(df["Age"].max())
 # Create slider with safe values
 age_filter = st.slider("Select Age Range", min_age, max_age, (20, 80))
 bmi_filter = st.slider("Select BMI Range", float(df["BMI"].min()), float(df["BMI"].max()), (20.0, 150.0))
+
+
 
 filtered_df = df[(df["Age"] >= age_filter[0]) & (df["Age"] <= age_filter[1]) &
                  (df["BMI"] >= bmi_filter[0]) & (df["BMI"] <= bmi_filter[1])]
@@ -169,7 +177,7 @@ This is a simple machine learning model that **classifies patients into "Yes" (D
 """)
 
 # Features and target
-X = df[['Age', 'BMI']]
+X = df[['Age', 'BMI','cholestrol_level']]
 y = df['Diabetes']
 
 # Train/test split
@@ -185,7 +193,7 @@ smote = SMOTE(random_state=42)
 X_train_res, y_train_res = smote.fit_resample(X_train_scaled, y_train)
 
 # Train KNN
-knn = KNeighborsClassifier(n_neighbors=6)
+knn = KNeighborsClassifier(n_neighbors=5)
 knn.fit(X_train_res, y_train_res)
 
 # Evaluate
