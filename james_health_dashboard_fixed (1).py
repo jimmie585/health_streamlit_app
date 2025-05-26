@@ -199,22 +199,28 @@ accuracy = accuracy_score(y_test, y_pred)
 # Assign cluster labels
 df["Cluster"] = kmeans.predict(df[["Age", "BMI"]])
 
-# Display cluster-wise characteristics
-st.subheader("🔍 Cluster Characteristics")
-
-cluster_stats = df.groupby("Cluster").agg({
-    "Age": ["mean", "min", "max"],
-    "BMI": ["mean", "min", "max"],
-    "Diabetes": lambda x: x.value_counts().index[0]  # Most common class
-}).reset_index()
-
-# Rename multi-index columns for clarity
-cluster_stats.columns = ["Cluster", "Age Mean", "Age Min", "Age Max", "BMI Mean", "BMI Min", "BMI Max", "Most Common Diabetes Label"]
-
+st.subheader("📊 Cluster Characteristics")
 st.dataframe(cluster_stats)
+
+# Optional interpretation
 st.markdown("""
-- **Cluster 0** appears to represent younger individuals with lower BMI.
-- **Cluster 1** includes older individuals with higher BMI, possibly at higher diabetes risk.
+### 🔎 Interpretation
+
+- **Cluster 0**: Typically includes [
+* Patience have both Normal and Prehypertension
+* All patients have Diabetes
+* Most of the patients are smokers 
+].
+
+- **Cluster 1**: Represents [
+* Most patients have Hypertension and small percentage have Normal
+* Almost all patients have No Diabetes
+* All patients smoke].
+
+- **Cluster 2**: [].
+- **Cluster 3**: [Insert traits].
+
+These clusters help us understand different population segments in relation to diabetes risk based on Age and BMI.
 """)
 
 
