@@ -1,6 +1,6 @@
 [theme]
-primaryColor = "#00B894"                # Bright teal - energetic but soft (buttons)
-backgroundColor = "#FFFFFF"             # Pure white - clean and professional
-secondaryBackgroundColor = "#F1F2F6"    # Light grey-blue - soft on the eyes (sidebar/panels)
-textColor = "#2D3436"                   # Charcoal - great contrast, easy reading
-font = "sans serif"                     # Modern and readable
+primaryColor = "#16A085"                # Bright aqua green – energetic and health-oriented
+backgroundColor = "#FAFAFA"             # Soft white – bright and clean
+secondaryBackgroundColor = "#E8F8F5"    # Light mint – fresh and bright side panels
+textColor = "#1B2631"                   # Dark slate – strong contrast, readable
+font = "sans serif"
